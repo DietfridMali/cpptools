@@ -35,15 +35,12 @@
     <ClInclude Include="..\include\custom_string.hpp" />
     <ClInclude Include="..\include\custom_vector.hpp" />
     <ClInclude Include="..\include\datacontainer.hpp" />
-    <ClInclude Include="..\include\datapool.hpp" />
     <ClInclude Include="..\include\dictionary.hpp" />
-    <ClInclude Include="..\include\fastdatapool.hpp" />
     <ClInclude Include="..\include\glm_matrix.hpp" />
     <ClInclude Include="..\include\glm_vector.hpp" />
     <ClInclude Include="..\include\list.hpp" />
     <ClInclude Include="..\include\list_helpers.h" />
     <ClInclude Include="..\include\matrix.hpp" />
-    <ClInclude Include="..\include\memorymanager.h" />
     <ClInclude Include="..\include\quicksort.hpp" />
     <ClInclude Include="..\include\segmentedlist.hpp" />
     <ClInclude Include="..\include\sharedglhandle.hpp" />
