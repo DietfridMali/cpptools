@@ -121,6 +121,15 @@ public:
 
     void Append(const DATA_T& data) { m_array.push_back(data); }
 
+    ManagedArray<DATA_T>& Append(ManagedArray<DATA_T>& other, bool copyData) {
+        Reserve(Length() + other.Length());
+        if (copyData) 
+            m_array.insert(m_array.end(), other.begin(), other.end());
+        else
+            m_array.insert(m_array.end(), std::make_move_iterator(other.begin()), std::make_move_iterator(other.end()));
+        return *this;
+    }
+
     void Fill(DATA_T value) {
         std::fill(m_array.begin(), m_array.end(), value);
     }
