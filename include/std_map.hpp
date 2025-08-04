@@ -52,6 +52,7 @@ public:
         m_map.erase(it);
         return true;
     }
+
     inline bool Extract(KEY_T&& key, DATA_T& data) {
         return Extract(static_cast<const KEY_T&>(key), data);
     }
@@ -85,6 +86,7 @@ public:
             return nullptr;
         return &(m_map.begin()->second);
     }
+
     DATA_T* Max() {
         if (m_map.empty())
             return nullptr;
@@ -101,6 +103,7 @@ public:
         m_map.erase(it);
         return true;
     }
+
     bool ExtractMax(DATA_T& data) {
         if (m_map.empty())
             return false;
