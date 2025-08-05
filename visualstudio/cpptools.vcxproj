@@ -47,6 +47,7 @@
     <ClInclude Include="..\include\sharedpointer.hpp" />
     <ClInclude Include="..\include\sharedresource.hpp" />
     <ClInclude Include="..\include\simpledatapool.hpp" />
+    <ClInclude Include="..\include\singletonbase.hpp" />
     <ClInclude Include="..\include\smartpointer.hpp" />
     <ClInclude Include="..\include\std_array.hpp" />
     <ClInclude Include="..\include\std_list.hpp" />
@@ -66,6 +67,7 @@
     <ClCompile Include="..\src\glm_matrix.cpp" />
     <ClCompile Include="..\src\glm_vector.cpp" />
     <ClCompile Include="..\src\matrix.cpp" />
+    <ClCompile Include="..\src\singletonbase.cpp" />
     <ClCompile Include="..\src\std_string.cpp" />
     <ClCompile Include="..\src\string.cpp" />
     <ClCompile Include="..\src\vector.cpp" />
