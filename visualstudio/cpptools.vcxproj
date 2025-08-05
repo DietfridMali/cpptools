@@ -67,7 +67,6 @@
     <ClCompile Include="..\src\glm_matrix.cpp" />
     <ClCompile Include="..\src\glm_vector.cpp" />
     <ClCompile Include="..\src\matrix.cpp" />
-    <ClCompile Include="..\src\singletonbase.cpp" />
     <ClCompile Include="..\src\std_string.cpp" />
     <ClCompile Include="..\src\string.cpp" />
     <ClCompile Include="..\src\vector.cpp" />
