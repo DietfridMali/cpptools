@@ -26,33 +26,22 @@ protected:
 // =================================================================================================
 
 template <typename CLASS_T>
-class PolymorphSingleton
-{
+class PolymorphSingleton {
 public:
     PolymorphSingleton(const PolymorphSingleton&) = delete;
     PolymorphSingleton& operator=(const PolymorphSingleton&) = delete;
     virtual ~PolymorphSingleton() = default;
 
-    inline bool HaveInstance(void) { return _instance != nullptr; }
-
-    static void CreateInstance()
+    static CLASS_T& Instance()
     {
         if (!_instance)
-            _instance = new CLASS_T();
-    }
-
-    // Zugriff auf die aktuelle Instanz
-    static CLASS_T& SingletonInstance()
-    {
-        if (!_instance) 
-            throw std::runtime_error("PolymorphSingleton::Instance() not initialized!");
+            throw std::runtime_error("Not initialized!");
         return *_instance;
     }
 
 protected:
-    inline static CLASS_T* _instance = nullptr;
-
-    PolymorphSingleton() = default;
+    PolymorphSingleton() { _instance = static_cast<CLASS_T*>(this); }
+    static inline CLASS_T* _instance = nullptr;
 };
 
 // =================================================================================================
