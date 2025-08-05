@@ -1,4 +1,5 @@
 
 #include "singletonbase.hpp"
 
-PolymorphSingleton* PolymorphSingleton::_instance = nullptr;
+template <typename BASE_T>
+BASE_T* PolymorphSingleton::_instance = nullptr;

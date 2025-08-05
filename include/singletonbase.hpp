@@ -25,6 +25,7 @@ protected:
 
 // =================================================================================================
 
+template <typename BASE_T>
 class PolymorphSingleton
 {
 public:
@@ -35,7 +36,7 @@ public:
     inline bool HaveInstance(void) { return _instance != nullptr; }
 
     // Zugriff auf die aktuelle Instanz
-    static PolymorphSingleton& SingletonInstance()
+    static BASE_T& SingletonInstance()
     {
         if (!_instance) 
             throw std::runtime_error("PolymorphSingleton::Instance() not initialized!");
@@ -44,7 +45,7 @@ public:
 
 protected:
     PolymorphSingleton() { _instance = this; }
-    static PolymorphSingleton* _instance;
+    static BASE_T* _instance;
 };
 
 // =================================================================================================
