@@ -32,10 +32,13 @@ public:
     PolymorphSingleton& operator=(const PolymorphSingleton&) = delete;
     virtual ~PolymorphSingleton() = default;
 
+    inline bool HaveInstance(void) { return _instance != nullptr; }
+
     // Zugriff auf die aktuelle Instanz
     static PolymorphSingleton& SingletonInstance()
     {
-        if (!_instance) throw std::runtime_error("PolymorphSingleton::Instance() not initialized!");
+        if (!_instance) 
+            throw std::runtime_error("PolymorphSingleton::Instance() not initialized!");
         return *_instance;
     }
 
