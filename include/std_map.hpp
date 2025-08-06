@@ -36,6 +36,14 @@ public:
         return nullptr;
     }
 
+    bool Find(const KEY_T& key, DATA_T& value) {
+        auto it = m_map.find(key);
+        if (it == m_map.end())
+            return false;
+        value = it->second;
+        return true;
+    }
+
     typename std::map<KEY_T, DATA_T>::iterator FindData(const DATA_T& data) {
         for (auto it = m_map.begin(); it != m_map.end(); ++it) {
             if (it->second == data)
