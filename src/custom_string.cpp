@@ -25,7 +25,7 @@ void String::Log(const char* fmt, const char* s) {
 	//----------------------------------------
 
 	String& String::Copy(const String& other, bool allowStatic) {
-		if ((this != &other) /* && (*this != other) */) {
+		if ((this != &other) /* and (*this != other) */) {
 			m_length = other.m_length;
 			if (not m_length)
 				SetBuffer(&m_empty, 1);
@@ -42,7 +42,7 @@ void String::Log(const char* fmt, const char* s) {
 	//----------------------------------------
 
 	String& String::Move(String& other) {
-		if ((this != &other) && (*this != other)) {
+		if ((this != &other) and (*this != other)) {
 			m_length = other.m_length;
 			if (not m_length)
 				SetBuffer(&m_empty, 1);
@@ -317,7 +317,7 @@ void String::Log(const char* fmt, const char* s) {
 		List<String> subStrings;
 		for (char* ps = Data(); *ps; ps++) {
 			char* pe{ ps };
-			for (; *pe && (*pe != delim); pe++)
+			for (; *pe and (*pe != delim); pe++)
 				;
 			subStrings.Append(String(ps, int(pe - ps)));
 			if (not *pe)

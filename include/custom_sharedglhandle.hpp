@@ -102,7 +102,7 @@ public:
 
 
     inline bool IsAvailable(void) {
-        return m_resource && m_resource->m_handle;
+        return m_resource and m_resource->m_handle;
     }
 };
 

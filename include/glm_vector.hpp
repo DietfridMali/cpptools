@@ -49,7 +49,7 @@ public:
 
     Vector& operator=(std::initializer_list<float> list) {
         int i = 0;
-        for (auto it = list.begin(); it != list.end() && i < VEC_TYPE::length(); ++it)
+        for (auto it = list.begin(); it != list.end() and i < VEC_TYPE::length(); ++it)
             (*this)[i++] = *it;
         for (; i < VEC_TYPE::length(); ++i)
             (*this)[i] = 0.0f;
@@ -147,7 +147,7 @@ public:
             glm::vec3 c = glm::cross(a3, b3);
             return Vector(glm::vec4(c, 0.0f));
         } else {
-            static_assert(std::is_same_v<VEC_TYPE, glm::vec3> || std::is_same_v<VEC_TYPE, glm::vec4>, "Cross nur für vec3 und vec4 definiert");
+            static_assert(std::is_same_v<VEC_TYPE, glm::vec3> or std::is_same_v<VEC_TYPE, glm::vec4>, "Cross nur für vec3 und vec4 definiert");
         }
     }
 

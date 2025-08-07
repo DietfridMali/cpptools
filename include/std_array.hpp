@@ -28,7 +28,7 @@ public:
     inline ManagedArray(int32_t width, int32_t height)
         : m_array(static_cast<size_t>(width)* static_cast<size_t>(height)),
         m_width(width), m_height(height) {
-        assert(width * height > 0 && "Width and height must be > 0");
+        assert(width * height > 0 and "Width and height must be > 0");
 #if defined(_DEBUG)
         if (width * height <= 0)
             throw std::invalid_argument("ManagedArray: invalid width or height arguments (must both be > 0)");
@@ -91,7 +91,7 @@ public:
 
     // 2D-Zugriff (x, y)
     inline DATA_T& operator()(int32_t x, int32_t y) {
-        assert(m_width > 0 && m_height > 0);
+        assert(m_width > 0 and m_height > 0);
 #if defined(_DEBUG)
         return m_array.at(static_cast<size_t>(y) * static_cast<size_t>(m_width) + static_cast<size_t>(x));
 #else
@@ -99,7 +99,7 @@ public:
 #endif
     }
 
-    inline bool IsValidIndex(int32_t i) { return (i >= 0) && (i < Length()); }
+    inline bool IsValidIndex(int32_t i) { return (i >= 0) and (i < Length()); }
 
     inline bool IsValidIndex(int32_t x, int32_t y) { return (x >= 0) and (x < m_width) and (y >= 0) and (y < m_height); }
 
@@ -111,7 +111,7 @@ public:
     }
 
     inline const DATA_T& operator()(int32_t x, int32_t y) const {
-        assert(m_width > 0 && m_height > 0);
+        assert(m_width > 0 and m_height > 0);
 #if defined(_DEBUG)
         return m_array.at(static_cast<size_t>(y) * static_cast<size_t>(m_width) + static_cast<size_t>(x));
 #else
@@ -241,7 +241,7 @@ public:
                 return compare(data, key) < 0; // a < b
             }
         );
-        if (it != m_array.end() && compare(*it, key) == 0)
+        if (it != m_array.end() and compare(*it, key) == 0)
             return static_cast<int>(std::distance(m_array.begin(), it));
         else
             return -1;

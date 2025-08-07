@@ -169,7 +169,7 @@ public:
 
 
     operator bool() {
-        return (m_resource != nullptr) && (DATA_T*)m_resource;
+        return (m_resource != nullptr) and (DATA_T*)m_resource;
     }
 };
 

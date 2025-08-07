@@ -157,7 +157,7 @@ int32_t BinSearch(const DATA_T* data, int32_t l, int32_t r, typename KEY_T::KeyT
 			l = m + 1;
 		else {
 			// find first record with equal key
-			while ((m > 0) && (data[m - 1] > key))
+			while ((m > 0) and (data[m - 1] > key))
 				--m;
 			return m;
 		}
@@ -182,7 +182,7 @@ int32_t BinSearch(DATA_T* const data, KEY_T const& key, int(__cdecl* compare)(DA
 			l = m + 1;
 		else {
 			// find first record with equal key
-			while ((m > 0) && (compare (data [m - 1], key) > 0))
+			while ((m > 0) and (compare (data [m - 1], key) > 0))
 				--m;
 			return m;
 		}

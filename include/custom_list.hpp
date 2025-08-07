@@ -377,7 +377,7 @@ public:
 
 		Iterator operator+(int n) const {
 			Iterator it = *this;
-			while ((n-- > 0) && (it != m_last)) {
+			while ((n-- > 0) and (it != m_last)) {
 				++it;
 			}
 			return it;
@@ -385,7 +385,7 @@ public:
 
 		Iterator operator-(int n) const {
 			Iterator it = *this;
-			while ((n-- > 0) && (it != m_first)) {
+			while ((n-- > 0) and (it != m_first)) {
 				--it;
 			}
 			return it;
@@ -656,11 +656,11 @@ public:
 			i = -(int(m_length) - i);
 		ListNodePtr p;
 		if (i > 0) {
-			for (p = first; (i > 0) && (p != m_tailPtr); i--)
+			for (p = first; (i > 0) and (p != m_tailPtr); i--)
 				++p;
 		}
 		else {
-			for (p = last; (++i < 0) && (p != m_headPtr); )
+			for (p = last; (++i < 0) and (p != m_headPtr); )
 				--p;
 		}
 		m_result = i == 0;
@@ -676,7 +676,7 @@ public:
 		ListNode* insertBefore = NodePtrAt(i, m_headPtr + 1, m_tailPtr);
 		if (not insertBefore)
 			return nullptr;
-		if (not newNode && (not (newNode = new ListNode())))
+		if (not newNode and (not (newNode = new ListNode())))
 			return nullptr;
 		newNode->m_pred = insertBefore->m_pred;
 		insertBefore->m_pred->m_succ = newNode;
@@ -835,7 +835,7 @@ public:
 		ListNode* start = NodePtrAt(int(from), m_headPtr + 1, m_tailPtr - 1);
 		ListNode* end = NodePtrAt(int(to ? to : m_length - 1), m_headPtr + 1, m_tailPtr - 1);
 		List<ItemType> l;
-		if ((start != nullptr) && (end != nullptr)) {
+		if ((start != nullptr) and (end != nullptr)) {
 			for (ListNode* it = start; it != end; it = it->next) {
 				l.Append(new ListNode(it->m_dataItem, it->m_manageData));
 			}

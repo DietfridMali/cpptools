@@ -45,9 +45,9 @@ public:
 
     // Gleichheitsoperator
     inline bool operator==(const SharedHandle& other) const {
-        if (!m_info && !other.m_info)
+        if (!m_info and !other.m_info)
             return true;
-        if (!m_info || !other.m_info)
+        if (!m_info or !other.m_info)
             return false;
         return m_info->handle == other.m_info->handle;
     }

@@ -287,7 +287,7 @@ public:
 
 	void Clear(uint8_t filler = 0, int32_t count = 0u) {
 		if (Data())
-			memset(Data(), filler, sizeof(DATA_T) * ((count && (count < m_info.capacity)) ? count : m_info.capacity));
+			memset(Data(), filler, sizeof(DATA_T) * ((count and (count < m_info.capacity)) ? count : m_info.capacity));
 	}
 
 	// ----------------------------------------
@@ -304,7 +304,7 @@ public:
 	// ----------------------------------------
 
 	inline bool IsIndex(int32_t i) {
-		return Data() && (i - m_info.offset >= 0) && (i - m_info.offset < m_info.capacity);
+		return Data() and (i - m_info.offset >= 0) and (i - m_info.offset < m_info.capacity);
 	}
 
 	// ----------------------------------------
@@ -411,7 +411,7 @@ public:
 		catch (...) {
 			return Data();
 		}
-		if (keepData && Data()) {
+		if (keepData and Data()) {
 			memcpy(p, Data(), ((capacity > m_info.capacity) ? m_info.capacity : capacity) * sizeof(DATA_T));
 			Clear(); // hack to avoid d'tors
 		}
@@ -452,13 +452,13 @@ public:
 	// ----------------------------------------
 
 	inline bool IsValidIndex(int32_t i) {
-		return (i >= 0) && (i < m_info.capacity);
+		return (i >= 0) and (i < m_info.capacity);
 	}
 
 	// ----------------------------------------
 
 	inline bool IsValidIndex(int32_t x, int32_t y) {
-		return (x >= 0) && (x < m_info.width) && (y >= 0) && (y < m_info.height);
+		return (x >= 0) and (x < m_info.width) and (y >= 0) and (y < m_info.height);
 	}
 
 	// ----------------------------------------
@@ -549,8 +549,8 @@ public:
 	// ----------------------------------------
 
 	ManagedArray& CopyData(const ManagedArray& source, bool allowStatic = true, int32_t offset = 0) {
-		if ((this != &source) && source.Data()) {
-			if (allowStatic && source.IsStatic()) {
+		if ((this != &source) and source.Data()) {
+			if (allowStatic and source.IsStatic()) {
 				Base::m_isStatic = true;
 				BufferHandle() = source.BufferHandle();
 			}
@@ -599,13 +599,13 @@ public:
 	// ----------------------------------------
 
 	inline bool operator== (ManagedArray<DATA_T>& other) {
-		return (m_info.capacity == other.m_info.capacity) and not (m_info.capacity && memcmp(Data(), other.Data()));
+		return (m_info.capacity == other.m_info.capacity) and not (m_info.capacity and memcmp(Data(), other.Data()));
 	}
 
 	// ----------------------------------------
 
 	inline bool operator!= (ManagedArray<DATA_T>& other) {
-		return (m_info.capacity != other.m_info.capacity) or (m_info.capacity && memcmp(Data(), other.Data()));
+		return (m_info.capacity != other.m_info.capacity) or (m_info.capacity and memcmp(Data(), other.Data()));
 	}
 
 	// ----------------------------------------
@@ -614,7 +614,7 @@ public:
 
 	// ----------------------------------------
 
-	inline DATA_T* End(void) { return (Data() && m_info.capacity) ? Data() + m_info.capacity - 1 : nullptr; }
+	inline DATA_T* End(void) { return (Data() and m_info.capacity) ? Data() + m_info.capacity - 1 : nullptr; }
 
 	// ----------------------------------------
 

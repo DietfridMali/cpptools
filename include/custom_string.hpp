@@ -209,49 +209,49 @@ class String : public SharedArray<char> {
 		//----------------------------------------
 
 		inline const bool operator== (const String& other) const {
-			return (Data () && other.Data ()) ? strcmp (Data (), other.Data ()) == 0 : false;
+			return (Data () and other.Data ()) ? strcmp (Data (), other.Data ()) == 0 : false;
 		}
 
 		//----------------------------------------
 
 		bool operator!= (const String& other) const { 
-			return (Data () && other.Data ()) ? strcmp (Data (), other.Data ()) != 0 : true;
+			return (Data () and other.Data ()) ? strcmp (Data (), other.Data ()) != 0 : true;
 		}
 
 		//----------------------------------------
 
 		bool operator< (const String& other) const {
-			return (Data() && other.Data()) ? strcmp(Data(), other.Data()) < 0 : false;
+			return (Data() and other.Data()) ? strcmp(Data(), other.Data()) < 0 : false;
 		}
 
 		//----------------------------------------
 
 		bool operator> (const String& other) const {
-			return (Data() && other.Data()) ? strcmp(Data(), other.Data()) > 0 : false;
+			return (Data() and other.Data()) ? strcmp(Data(), other.Data()) > 0 : false;
 		}
 
 		//----------------------------------------
 
 		bool operator<= (const String& other) const {
-			return (Data() && other.Data()) ? strcmp(Data(), other.Data()) <= 0 : false;
+			return (Data() and other.Data()) ? strcmp(Data(), other.Data()) <= 0 : false;
 		}
 
 		//----------------------------------------
 
 		bool operator>= (const String& other) const {
-			return (Data() && other.Data()) ? strcmp(Data(), other.Data()) >= 0 : false;
+			return (Data() and other.Data()) ? strcmp(Data(), other.Data()) >= 0 : false;
 		}
 
 		//----------------------------------------
 
 		inline const bool operator== (const char* other) const {
-			return (Data () && other) ? strcmp(Data(), other) == 0 : false;
+			return (Data () and other) ? strcmp(Data(), other) == 0 : false;
 		}
 
 		//----------------------------------------
 
 		bool operator!= (const char* other) const {
-			return (Data () && other) ? strcmp(Data(), other) != 0 : true;
+			return (Data () and other) ? strcmp(Data(), other) != 0 : true;
 		}
 
 		//----------------------------------------
@@ -305,7 +305,7 @@ class String : public SharedArray<char> {
 		String ToUppercase(void);
 
 		static int Compare(void* context, const String& s1, const String& s2) {
-			return (s1.Data() && s2.Data()) ? strcmp(s1.Data(), s2.Data()) : 0;
+			return (s1.Data() and s2.Data()) ? strcmp(s1.Data(), s2.Data()) : 0;
 		}
 
 		//----------------------------------------

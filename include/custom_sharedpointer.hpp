@@ -143,7 +143,7 @@ public:
 
 
     inline bool IsAvailable(void) const {
-        return this->m_resource && this->m_resource->m_handle;
+        return this->m_resource and this->m_resource->m_handle;
     }
 };
 

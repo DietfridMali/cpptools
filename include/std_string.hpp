@@ -115,13 +115,13 @@ public:
 
     inline bool IsLowercase() const {
         return std::all_of(m_str.begin(), m_str.end(), [](unsigned char c) {
-            return not std::isalpha(c) || std::islower(c);
+            return not std::isalpha(c) or std::islower(c);
             });
     }
 
     inline bool IsUppercase() const {
         return std::all_of(m_str.begin(), m_str.end(), [](unsigned char c) {
-            return not std::isalpha(c) || std::isupper(c);
+            return not std::isalpha(c) or std::isupper(c);
             });
     }
 
@@ -252,7 +252,7 @@ inline String::operator float() const {
 }
 
 inline String::operator bool() const {
-    return !m_str.empty() && m_str != "0";
+    return !m_str.empty() and m_str != "0";
 }
 
 // ---------- Template-Funktionen ----------

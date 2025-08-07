@@ -15,7 +15,7 @@ String String::Replace(const char* oldPattern, const char* newPattern, int repet
     while ((pos = result.find(oldStr, pos)) != std::string::npos) {
         result.replace(pos, oldStr.length(), newStr);
         pos += newStr.length();
-        if (repetitions > 0 && ++count >= repetitions)
+        if (repetitions > 0 and ++count >= repetitions)
             break;
     }
 

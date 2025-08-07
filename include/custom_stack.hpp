@@ -113,7 +113,7 @@ class Stack : public Array< DATA_T > {
 		inline int32_t ToS (void) { return m_tos; }
 
 
-		inline DATA_T* Top (void) { return (this->m_data && m_tos) ? this->m_data + m_tos - 1 : NULL; }
+		inline DATA_T* Top (void) { return (this->m_data and m_tos) ? this->m_data + m_tos - 1 : NULL; }
 
 
 		inline bool Delete (int32_t i) {

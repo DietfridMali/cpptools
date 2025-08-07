@@ -67,11 +67,11 @@ namespace StringUtils {
     // ---------- Prüffunktionen ----------
 
     inline bool IsLower(std::string_view s) {
-        return std::ranges::all_of(s, [](unsigned char c) { return std::islower(c) || !std::isalpha(c); });
+        return std::ranges::all_of(s, [](unsigned char c) { return std::islower(c) or !std::isalpha(c); });
     }
 
     inline bool IsUpper(std::string_view s) {
-        return std::ranges::all_of(s, [](unsigned char c) { return std::isupper(c) || !std::isalpha(c); });
+        return std::ranges::all_of(s, [](unsigned char c) { return std::isupper(c) or !std::isalpha(c); });
     }
 
     // ---------- Split ----------
@@ -97,7 +97,7 @@ namespace StringUtils {
 
         while (true) {
             size_t pos = s.find(oldPattern, start);
-            if (pos == std::string_view::npos || (repetitions > 0 && count >= repetitions)) {
+            if (pos == std::string_view::npos or (repetitions > 0 and count >= repetitions)) {
                 result.append(s.substr(start));
                 break;
             }

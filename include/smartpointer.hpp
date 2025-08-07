@@ -127,7 +127,7 @@ public:
 
 
     void Destroy(void) {
-        if (m_data && !--(*m_data))
+        if (m_data and !--(*m_data))
             delete m_data;
     }
 

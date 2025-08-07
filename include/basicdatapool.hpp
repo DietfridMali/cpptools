@@ -38,7 +38,7 @@ public:
 	bool Setup(int capacity, bool createOnce) {
 		if (capacity <= 0)
 			return false;
-		if (createOnce && m_isCreated)
+		if (createOnce and m_isCreated)
 			return true;
 
 		Destroy();
@@ -46,7 +46,7 @@ public:
 		m_itemPool = reinterpret_cast<ITEM_T*>(malloc(capacity * sizeof(ITEM_T))); // new DataItem<ITEM_T>[capacity];
 		m_freeItems = reinterpret_cast<int*>(malloc(capacity * sizeof(*m_freeItems))); // new int[capacity];
 
-		if (not (m_itemPool && m_freeItems)) {
+		if (not (m_itemPool and m_freeItems)) {
 			Destroy();
 			return false;
 		}

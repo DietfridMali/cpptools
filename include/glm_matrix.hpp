@@ -142,7 +142,7 @@ public:
     }
 
     inline Matrix4f& Rotate(float angleDeg, const glm::vec3& axis) {
-        if ((angleDeg != 0.0f) && (glm::length(axis) != 0.0f))
+        if ((angleDeg != 0.0f) and (glm::length(axis) != 0.0f))
             m = glm::rotate(m, glm::radians(angleDeg), axis);
         return *this;
     }
