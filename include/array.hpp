@@ -18,9 +18,7 @@
 
 #	include "custom_array.hpp"
 
-#<array>
+#endif //USE_STD_VECTOR
 
 template <typename DATA_T, size_t size>
 using SimpleArray = std::array<DATA_T, size>;
-
-#endif //USE_STD_VECTOR
