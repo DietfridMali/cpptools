@@ -225,9 +225,15 @@ public:
         return 0;
     }
 
-    operator const float*() const { return glm::value_ptr(*this); }
+    operator const float* () const {
+        return glm::value_ptr(static_cast<VEC_TYPE const&>(*this));
+    }
 
-    float* AsArray() { return glm::value_ptr(*this); }
+    float* AsArray() {
+        return const_cast<float*>(
+            glm::value_ptr(static_cast<VEC_TYPE const&>(*this))
+            );
+    }
 
     static float Dot(float* v1, float* v2, int count) {
         float dot = 0.0f;
