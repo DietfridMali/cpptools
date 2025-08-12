@@ -135,6 +135,9 @@
     <ClInclude Include="..\include\singletonbase.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\apptools\include\timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\custom_matrix.cpp">
