@@ -20,12 +20,15 @@ public:
 
     DATA_T* Find(const KEY_T& key) {
         auto it = m_map.find(key);
-        return (it != m_map.end()) ? &(it->second) : nullptr;
+        return (it != m_map.end()) ? &it->second : nullptr;
     }
-    
-    inline DATA_T* Find(KEY_T&& key) {
-        return Find(static_cast<const KEY_T&>(key));
+    // const
+    const DATA_T* Find(const KEY_T& key) const {
+        auto it = m_map.find(key);
+        return (it != m_map.end()) ? &it->second : nullptr;
     }
+    // rvalue-Key delegiert
+    DATA_T* Find(KEY_T&& key) { return Find(static_cast<const KEY_T&>(key)); }
 
     template <typename Predicate>
     DATA_T* FindIf(Predicate pred) {
