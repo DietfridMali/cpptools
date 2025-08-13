@@ -11,8 +11,10 @@ template<typename DATA_T>
 class ManagedArray {
 private:
     std::vector<DATA_T> m_array;
-    int32_t m_width = 0;
-    int32_t m_height = 0;
+    int32_t m_width{ 0 };
+    int32_t m_height{ 0 };
+    bool m_autoFit{ false };
+    bool m_isShrinkable{ true };
 
 public:
     // Konstruktor für 1D-ManagedArray
@@ -46,15 +48,25 @@ public:
 
     // Copy-Zuweisungsoperator
     ManagedArray& operator=(const ManagedArray& other) {
-        if (this != &other)
+        if (this != &other) {
             m_array = other.m_array;
+            m_width = other.m_width;
+            m_height = other.m_height;
+            m_autoFit = other.m_autoFit;
+            m_isShrinkable = other.m_isShrinkable;
+        }
         return *this;
     }
 
     // Move-Zuweisungsoperator
     ManagedArray& operator=(ManagedArray&& other) noexcept {
-        if (this != &other)
+        if (this != &other) {
             m_array = std::move(other.m_array);
+            m_width = std::exchange(other.m_width, 0);
+            m_height = std::exchange(other.m_height, 0);
+            m_autoFit = std::exchange(other.m_autoFit, false);
+            m_isShrinkable = std::exchange(other.m_isShrinkable, true);
+        }
         return *this;
     }
 
@@ -82,6 +94,8 @@ public:
 #endif
     }
     inline const DATA_T& operator[](int32_t i) const {
+        if (m_autoFit and (i >= Length()))
+            Resize(i + 1);
 #if defined(_DEBUG)
         return m_array.at(static_cast<size_t>(i));
 #else
@@ -172,16 +186,24 @@ public:
         m_array.reserve(static_cast<size_t>(capacity));
     }
 
+    inline bool AllowResize(size_t newSize) {
+        return m_isShrinkable or (newSize > Length());
+    }
+
     // Resize-Methoden
     inline DATA_T* Resize(int32_t newSize) {
-        m_array.resize(static_cast<size_t>(newSize));
+        if (AllowResize(newSize))
+            m_array.resize(static_cast<size_t>(newSize));
         return Data();
     }
 
     inline DATA_T* Resize(int32_t width, int32_t height) {
-        m_array.resize(static_cast<size_t>(width) * static_cast<size_t>(height));
-        m_width = width; 
-        m_height = height; 
+        size_t newSize = static_cast<size_t>(width) * static_cast<size_t>(height);
+        if (AllowResize(newSize)) {
+            m_array.resize(newSize);
+            m_width = width;
+            m_height = height;
+        }
         return Data();
     }
 
@@ -245,6 +267,26 @@ public:
             return static_cast<int>(std::distance(m_array.begin(), it));
         else
             return -1;
+    }
+
+    inline bool GetAutoFit(void) {
+        return m_autoFit;
+    }
+    
+    inline bool SetAutoFit(bool newSetting) {
+        bool currentSetting = m_autoFit;
+        m_autoFit = newSetting;
+        return currentSetting;
+    }
+
+    inline bool GetShrinkable(void) {
+        return m_autoFit;
+    }
+
+    inline bool SetShrinkable(bool newSetting) {
+        bool currentSetting = m_isShrinkable;
+        m_isShrinkable = newSetting;
+        return currentSetting;
     }
 };
 
