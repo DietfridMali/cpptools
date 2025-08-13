@@ -15,6 +15,7 @@ private:
     int32_t m_height{ 0 };
     bool m_autoFit{ false };
     bool m_isShrinkable{ true };
+    DATA_T m_defaultValue;
 
 public:
     // Konstruktor für 1D-ManagedArray
@@ -54,6 +55,7 @@ public:
             m_height = other.m_height;
             m_autoFit = other.m_autoFit;
             m_isShrinkable = other.m_isShrinkable;
+            m_defaultValue = other.m_defaultValue;
         }
         return *this;
     }
@@ -66,6 +68,7 @@ public:
             m_height = std::exchange(other.m_height, 0);
             m_autoFit = std::exchange(other.m_autoFit, false);
             m_isShrinkable = std::exchange(other.m_isShrinkable, true);
+            m_defaultValue = other.m_defaultValue;
         }
         return *this;
     }
@@ -85,6 +88,11 @@ public:
     // Gesamte Datenmenge in Bytes
     inline int32_t DataSize() const { return Length() * static_cast<int32_t>(sizeof(DATA_T)); }
 
+    inline void AutoFit(int32_t i) {
+        if (m_autoFit and (i >= Length()))
+            Resize(i + 1, m_defaultValue);
+    }
+
     // 1D-Indexzugriff
     inline DATA_T& operator[](int32_t i) {
 #if defined(_DEBUG)
@@ -93,9 +101,9 @@ public:
         return m_array[static_cast<size_t>(i)];
 #endif
     }
+
     inline const DATA_T& operator[](int32_t i) const {
-        if (m_autoFit and (i >= Length()))
-            Resize(i + 1);
+        AutoFit(i);
 #if defined(_DEBUG)
         return m_array.at(static_cast<size_t>(i));
 #else
@@ -107,21 +115,26 @@ public:
     inline DATA_T& operator()(int32_t x, int32_t y) {
         assert(m_width > 0 and m_height > 0);
 #if defined(_DEBUG)
-        return m_array.at(static_cast<size_t>(y) * static_cast<size_t>(m_width) + static_cast<size_t>(x));
+        size_t i = y * m_width + x;
+        AutoFit(i);
+        return m_array.at(static_cast<size_t>(i));
 #else
-        return m_array[static_cast<size_t>(y) * static_cast<size_t>(m_width) + static_cast<size_t>(x)];
+        return m_array[static_cast<size_t>(y * m_width + x)];
 #endif
     }
 
-    inline bool IsValidIndex(int32_t i) { return (i >= 0) and (i < Length()); }
+    inline bool IsValidIndex(int32_t i) { return (i >= 0) and (m_autoFit or (i < Length())); }
 
-    inline bool IsValidIndex(int32_t x, int32_t y) { return (x >= 0) and (x < m_width) and (y >= 0) and (y < m_height); }
+    inline bool IsValidIndex(int32_t x, int32_t y) { return (x >= 0) and (m_autoFit or (x < m_width)) and (y >= 0) and (m_autoFit or (y < m_height)); }
 
     inline int GetCheckedIndex(int32_t x, int32_t y) { return IsValidIndex(x, y) ?int(y * m_width + x) : -1; }
 
     inline DATA_T* operator()(int32_t x, int32_t y, bool rangeCheck) { // always checks range; parameter only to distinguish from other operator()
         int i = GetCheckedIndex(x, y);
-        return (i < 0) ? nullptr : Data(i);
+        if (i < 0)
+            return nullptr;
+        AutoFit(i);
+        Data(i);
     }
 
     inline const DATA_T& operator()(int32_t x, int32_t y) const {
@@ -194,6 +207,12 @@ public:
     inline DATA_T* Resize(int32_t newSize) {
         if (AllowResize(newSize))
             m_array.resize(static_cast<size_t>(newSize));
+        return Data();
+    }
+
+    inline DATA_T* Resize(int32_t newSize, const DATA_T& value) {
+        if (AllowResize(newSize))
+            m_array.resize(static_cast<size_t>(newSize, value));
         return Data();
     }
 
@@ -287,6 +306,10 @@ public:
         bool currentSetting = m_isShrinkable;
         m_isShrinkable = newSetting;
         return currentSetting;
+    }
+
+    inline void SetDefaultValue(const DATA_T& defaultValue) {
+        m_defaultValue = defaultValue;
     }
 };
 
