@@ -88,13 +88,15 @@ public:
     // Gesamte Datenmenge in Bytes
     inline int32_t DataSize() const { return Length() * static_cast<int32_t>(sizeof(DATA_T)); }
 
-    inline void AutoFit(int32_t i) {
+    inline int32_t AutoFit(int32_t i) {
         if (m_autoFit and (i >= Length()))
-            Resize(i + 1, m_defaultValue);
+            m_array.resize(i + 1, m_defaultValue);
+        return i;
     }
 
     // 1D-Indexzugriff
     inline DATA_T& operator[](int32_t i) {
+        AutoFit(i);
 #if defined(_DEBUG)
         return m_array.at(static_cast<size_t>(i));
 #else
@@ -103,7 +105,6 @@ public:
     }
 
     inline const DATA_T& operator[](int32_t i) const {
-        AutoFit(i);
 #if defined(_DEBUG)
         return m_array.at(static_cast<size_t>(i));
 #else
@@ -115,7 +116,7 @@ public:
     inline DATA_T& operator()(int32_t x, int32_t y) {
         assert(m_width > 0 and m_height > 0);
 #if defined(_DEBUG)
-        size_t i = y * m_width + x;
+        int32_t i = y * m_width + x;
         AutoFit(i);
         return m_array.at(static_cast<size_t>(i));
 #else
@@ -131,10 +132,7 @@ public:
 
     inline DATA_T* operator()(int32_t x, int32_t y, bool rangeCheck) { // always checks range; parameter only to distinguish from other operator()
         int i = GetCheckedIndex(x, y);
-        if (i < 0)
-            return nullptr;
-        AutoFit(i);
-        Data(i);
+        return (i < 0) ? nullptr : Data(AutoFit(i));
     }
 
     inline const DATA_T& operator()(int32_t x, int32_t y) const {
@@ -212,7 +210,7 @@ public:
 
     inline DATA_T* Resize(int32_t newSize, const DATA_T& value) {
         if (AllowResize(newSize))
-            m_array.resize(static_cast<size_t>(newSize, value));
+            m_array.resize(static_cast<size_t>(newSize), value);
         return Data();
     }
 
