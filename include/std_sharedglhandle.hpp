@@ -14,25 +14,22 @@ class SharedHandle {
 protected:
     struct HandleInfo {
         HANDLE_T handle;
-        std::function<void(HANDLE_T)> releaser;
 
-        HandleInfo(HANDLE_T h, std::function<void(HANDLE_T)> d)
-            : handle(h), releaser(std::move(d)) {
-        }
+        HandleInfo(HANDLE_T h)
+            : handle(h) 
+        { }
     };
 
     std::shared_ptr<HandleInfo> m_info;
+    std::function<void(HANDLE_T)> m_releaser;
     std::function<HANDLE_T()> m_allocator;
 
 public:
     SharedHandle() = default;
 
-    SharedHandle(HANDLE_T handle, 
-        std::function<HANDLE_T()> allocator,
-        std::function<void(HANDLE_T)> releaser)
-        : m_info(std::make_shared<HandleInfo>(handle, std::move(releaser))),
-        m_allocator(std::move(allocator)) {
-    }
+    SharedHandle(HANDLE_T handle, std::function<HANDLE_T()> allocator, std::function<void(HANDLE_T)> releaser)
+        : m_info(std::make_shared<HandleInfo>(handle)), m_allocator(std::move(allocator)), m_releaser(std::move(releaser)) 
+    { }
 
     // Copy/Move-Constructor und Assignment
     SharedHandle(const SharedHandle&) = default;
@@ -77,7 +74,7 @@ public:
         Release();
         HANDLE_T newHandle = m_allocator();
         if (newHandle)
-            m_info = std::make_shared<HandleInfo>(newHandle, m_info ? m_info->releaser : nullptr);
+            m_info = std::make_shared<HandleInfo>(newHandle);
         return newHandle;
     }
 
@@ -96,8 +93,8 @@ public:
     SharedGLHandle(GLuint handle, glBufferAllocator allocator, glBufferReleaser releaser)
         : SharedHandle(
             handle, 
-            [allocator]() { GLuint h; allocator(1, &h); return h; },  
-            [releaser](GLuint h) { if (h) releaser(1, &h); } 
+            [allocator]() { GLuint h; if (allocator == nullptr) h = 0; else allocator(1, &h); return h; },
+            [releaser](GLuint h) { if (h and (releaser != nullptr)) releaser(1, &h); } 
           )
     { }
 };
